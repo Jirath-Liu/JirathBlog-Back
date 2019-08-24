@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jirath.dao.SortrsDao">
+
+    <insert id="addSort" parameterType="SortInfo" useGeneratedKeys="true" keyProperty="sort_id">
+        INSERT INTO sorts (sort_name,sort_description,sort_parent)VALUES (${sortName},${sortDescription},${sortParent})
+    </insert>
+
+    <select id="getAllSorts" resultType="SortInfo">
+        SELECT * FROM sorts
+    </select>
+    <update id="editSort" parameterType="SortInfo">
+        UPDATE sorts SET sort_name=${sortName},sort_description=${sortDescription},sort_parent=${sortParent} WHERE sortId=${sortId}
+    </update>
+    <delete id="deleteSort" parameterType="integer">
+        delete FROM sorts WHERE sort_id=${sortId}
+    </delete>
+</mapper>

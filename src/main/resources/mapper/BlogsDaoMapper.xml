@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jirath.dao.BlogsDao">
+
+<!--    直接用类，或者配包配合注解，可以直接使用resultType-->
+<!--    <resultMap id="BlogInfo" type="com.jirath.model.SimpleBlogInfo">-->
+<!--        <id column="blog_id" jdbcType="INTEGER" property="blog_id"/>-->
+<!--        <result column="blog_author" jdbcType="VARCHAR" property="blog_author"/>-->
+<!--        <result column="blog_create_time" jdbcType="DATE" property="blog_create_time"/>-->
+<!--        <result column="blog_title" jdbcType="VARCHAR" property="blog_title"/>-->
+<!--    </resultMap>-->
+
+    <select id="getSimpleBlogs" resultType="BlogInfo">
+        SELECT blog_id,blog_author,blog_create_time,blog_title FROM blogs
+    </select>
+
+    <select id="getDetailInfo" resultType="DetailBlogInfo" parameterType="int">
+        SELECT * FROM blogs WHERE blog_id=#{value}
+    </select>
+
+    <insert id="addBlogInfo" parameterType="DetailBlogInfo" useGeneratedKeys="true" keyProperty="blog_id">
+        INSERT INTO blogs (blog_author, blog_create_time, blog_title, blog_context)values (${blogAuthor},${blogCreateTime},${blogTitle},${blogContext})
+    </insert>
+
+    <update id="editBlog" parameterType="DetailBlogInfo">
+        UPDATE blogs SET blog_title=${blogTitle},blog_author=${blogAuthor},blog_create_time=${blogCreateTime},blog_context=${blogContext} WHERE blog_id=${blogId}
+    </update>
+
+    <delete id="deleteBlog" parameterType="integer">
+        DELETE FROM blogs WHERE blog_id=${blogId}
+    </delete>
+
+    <select id="getSimpleBlogsByIdList" resultType="BlogInfo" parameterType="java.util.List">
+<if test="blogIdList.size()!= 0">
+        select blog_id,blog_author,blog_create_time,blog_title FROM blogs
+        In
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            ${item};
+        </foreach>
+</if>
+    </select>
+
+</mapper>

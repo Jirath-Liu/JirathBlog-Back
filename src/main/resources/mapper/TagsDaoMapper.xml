@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jirath.dao.TagsDao">
+    <insert id="addTag" parameterType="TagInfo" useGeneratedKeys="true" keyProperty="tag_id">
+        INSERT INTO tags (tag_name,tag_description,tag_parent)VALUES (${tagName},${tagDescription},${tagParent})
+    </insert>
+
+    <select id="getAllTags" resultType="TagInfo">
+        SELECT * FROM tags
+    </select>
+    <delete id="deleteTag" parameterType="integer">
+        delete FROM tags WHERE tagId=${tagId}
+    </delete>
+    <update id="editTag" parameterType="TagInfo">
+        UPDATE tags SET tag_name=${tagName},tag_description=${tagDescription},tag_parent=${tagParent} WHERE tagId=${tagId}
+    </update>
+</mapper>

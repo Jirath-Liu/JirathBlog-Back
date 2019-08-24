@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jirath.dao.BlogSortsDao">
+
+    <insert id="addSort" parameterType="BlogSortInfo">
+        INSERT INTO blog_sorts values (${blogId},${sortId})
+    </insert>
+
+    <update id="editBlogSort" parameterType="BlogSortInfo">
+        UPDATE blog_sorts SET sort_id=${sortId} WHERE blog_id=${blogId}
+    </update>
+
+    <select id="getBlogBySort" parameterType="Integer" resultType="Integer">
+        SELECT blog_id FROM blog_sorts WHERE sort_id=${sortId}
+    </select>
+
+    <update id="deleteBlog" parameterType="Integer">
+        update blog_sorts SET sort_id=0 WHERE sort_id=${sortId}
+    </update>
+    <update id="deleteSort" parameterType="integer">
+        UPDATE blog_sorts SET sort_id=0 WHERE sortId=${sortId}
+    </update>
+</mapper>
